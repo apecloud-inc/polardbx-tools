@@ -3,10 +3,28 @@ FROM openjdk:8-jdk-alpine
 WORKDIR /app
 
 COPY /frodo/frodo-core/target/frodo-core-1.1.33.jar /app/
-COPY outout_log.json /app/
 
-CMD ["java", "-Xms512M", "-Xmx2G", "-jar", "frodo-core-1.1.33.jar", \
-    "--file=outout_log.json", \
-    "--source-db=mysql", "--replay-to=mysql", "--port=3306", "--host=172.18.0.4", "--username=aaa", "--password=Grxrrxyrx11", \
-    "--log-level=info", "--database=test", \
-    "--concurrency=64", "--time=1000", "--task=task1", "--rate-factor=1"]
+# Set environment variables
+ENV JAVA_XMS 512M
+ENV JAVA_XMX 2G
+ENV JAR_FILE frodo-core-1.1.33.jar
+ENV FILE outout_log.json
+ENV SOURCE_DB mysql
+ENV REPLAY_TO mysql
+ENV PORT 3306
+ENV HOST 172.18.0.4
+ENV USERNAME aaa
+ENV PASSWORD Abc123456
+ENV LOG_LEVEL info
+ENV DATABASE test
+ENV CONCURRENCY 64
+ENV TIME 1000
+ENV TASK task1
+ENV RATE_FACTOR 1
+
+# CMD instruction using environment variables
+CMD ["java", "-Xms${JAVA_XMS}", "-Xmx${JAVA_XMX}", "-jar", "${JAR_FILE}", \
+    "--file=${FILE}", \
+    "--source-db=${SOURCE_DB}", "--replay-to=${REPLAY_TO}", "--port=${PORT}", "--host=${HOST}", "--username=${USERNAME}", "--password=${PASSWORD}", \
+    "--log-level=${LOG_LEVEL}", "--database=${DATABASE}", \
+    "--concurrency=${CONCURRENCY}", "--time=${TIME}", "--task=${TASK}", "--rate-factor=${RATE_FACTOR}"]
