@@ -1,8 +1,15 @@
 FROM openjdk:8-jdk-alpine
 
+RUN apk add --no-cache build-base make bash
+RUN apk update && apk add --no-cache maven
+
 WORKDIR /app
 
-COPY /frodo/frodo-core/target/frodo-core-1.1.33.jar /app/
+COPY . /app
+
+WORKDIR /app/frodo
+RUN chmod +x build.sh
+RUN ./build.sh
 
 # Set environment variables
 ENV JAVA_XMS 512M
