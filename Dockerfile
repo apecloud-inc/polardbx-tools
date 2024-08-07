@@ -1,22 +1,11 @@
 FROM openjdk:8-jdk-alpine
 
 RUN apk add --no-cache build-base make bash
-RUN apk update && apk add --no-cache maven
+RUN apk update && apk add --no-cache maven curl
 
 WORKDIR /app
 
 COPY . /app
-
-ENV USER user
-ENV TOKEN token
-ENV ORG org
-ENV CLUSTERNAME cluster_name
-ENV STARTTIME start_time
-ENV ENDTIME end_time
-
-RUN curl -X 'GET' -u $USER:$TOKEN \
-  "https://api-dev.apecloud.cn/admin/v1/organizations/$ORG/clusters/$CLUSTERNAME/logs/audit?startTime=$STARTTIME&endTime=$ENDTIME&sortType=desc" \
-  -H 'accept: application/json'
 
 WORKDIR /app/frodo
 RUN chmod +x build.sh
