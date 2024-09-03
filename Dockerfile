@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM --platform=linux/amd64 openjdk:8-jdk-alpine
 
 RUN apk add --no-cache build-base make bash
 RUN apk update && apk add --no-cache maven curl
