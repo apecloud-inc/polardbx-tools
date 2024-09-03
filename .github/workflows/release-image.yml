@@ -41,4 +41,5 @@ jobs:
       VERSION: "${{ needs.release-version.outputs.release-version }}"
       DOCKERFILE_PATH: "./Dockerfile"
       APECD_REF: "v0.3.0"
+      BUILDX_PLATFORMS: "linux/amd64"
     secrets: inherit
